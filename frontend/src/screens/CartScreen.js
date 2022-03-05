@@ -11,7 +11,7 @@ import {
   Button,
   Card,
 } from "react-bootstrap";
-// import { addToCart } from "../actions/cartActions";
+import { addToCart } from "../actions/cartActions";
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -19,6 +19,12 @@ const CartScreen = ({ match, location, history }) => {
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+
+  const { cartItems } = cart;
+
+  console.log(cartItems);
 
   useEffect(() => {
     if (productId) {
