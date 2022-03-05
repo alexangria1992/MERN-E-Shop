@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
+import { addToCart, removeFromCart } from "../actions/cartActions";
+
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
   Col,
@@ -11,7 +12,7 @@ import {
   Button,
   Card,
 } from "react-bootstrap";
-import { addToCart } from "../actions/cartActions";
+import Message from "../components/Message";
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -21,10 +22,7 @@ const CartScreen = ({ match, location, history }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-
   const { cartItems } = cart;
-
-  console.log(cartItems);
 
   useEffect(() => {
     if (productId) {
@@ -32,14 +30,13 @@ const CartScreen = ({ match, location, history }) => {
     }
   }, [dispatch, productId, qty]);
 
-  console.log(qty);
-
   const checkoutHandler = () => {
     history.push("/login?redirect=shipping");
   };
 
   const removeFromCartHandler = (id) => {
-    console.log("remove");
+    dispatch(removeFromCart(id));
+    history.push("/cart");
   };
 
   return (
